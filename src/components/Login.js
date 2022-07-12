@@ -13,9 +13,14 @@ export const Login = () => {
         }
     }
     return (
-        <div>
-            <input type={'text'} onChange={e => setUser(e.target.value)} />
-            <button onClick={() => handleLogin(user)}>LOGIN</button>
+        <div className="h-[100vh] bg-[aliceblue] flex justify-center items-center">
+            <div className="bg-[white] h-[400px] w-[350px] shadow-lg rounded-lg flex flex-col items-center justify-center">
+                <div className="flex items-center w-[80%] p-[5px] rounded-md border-[2px] mb-[20px]">
+                    <img className="h-[22px]" src="user.png" />
+                    <input maxLength={10} placeholder="Phone Number" className="ml-[6px] outline-none text-[14px]" type={'text'} onChange={e => setUser(e.target.value)} />
+                </div>
+                <button className="bg-[#ff3434] w-[30%] text-white rounded-md h-[40px]" onClick={() => handleLogin(user)}>LOGIN</button>
+            </div>
         </div>
     )
 }
