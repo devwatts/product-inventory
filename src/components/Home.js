@@ -1,18 +1,23 @@
 import { Card } from "./ProductCard"
+import { useState,useEffect } from "react";
+import { getAllProducts } from "../actions/products";
 
+export const Home = () => {
+    const [products, setProducts] = useState({});
 
-export const Home = () =>{
+    useEffect(() => {
+        async function loadProducts(){
+            setProducts(await getAllProducts());
+        }
+        loadProducts();
+    },[]);
+
+    console.log(products)
+    
     return(
         <div className="bg-[aliceblue] h-[100vh]">
             <div className="flex flex-wrap m-[auto] w-[80%]">
-                <Card></Card>
-                <Card></Card>
-                <Card></Card>
-                <Card></Card>
-                <Card></Card>
-                <Card></Card>
-                <Card></Card>
-                <Card></Card>
+                {Object.keys(products).length !== 0?products.data.map((data)=><Card content={data}></Card>):''}
             </div>
         </div>
     )
