@@ -1,38 +1,55 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../utils/auth";
+import LoadingScreen from "./LoadingScreen";
+import { checkNumber, checkOTP } from "../helpers/checkNumber";
 
 export const Login = () => {
     const [phone, setPhone] = useState('');
     const [otpDiv, setOtpDiv] = useState(false);
-    const [otp, setOtp] = useState('')
+    const [otp, setOtp] = useState('');
+    const [loading, setLoading] = useState(false);
     const auth = useAuth();
     const navigate = useNavigate();
 
     const handleLogin = async(phone) => {
-        await auth.login(phone)
-        .then(res => {
-            if(res){
-                setOtpDiv(true);
-            }else{
-                alert('Internal Server Error\n Please try after some time')
-            }
-        })
+        if(checkNumber(phone)){
+            setLoading(true);
+            await auth.login(phone)
+            .then(res => {
+                setLoading(false);
+                if(res){
+                 setOtpDiv(true);
+                 }else{
+                      alert('Internal Server Error\n Please try after some time')
+                 }
+            })
+        }else{
+            alert('Please enter a correct phone number!');
+        }
     }
 
     const handleOtp = async() => {
-        await auth.confirmLogin(phone,otp)
-        .then(res => {
-            if(res){
-                navigate('/');
-            }else{
-                alert('You have entered the wrong OTP!')
-            }
-        })
+        if(checkOTP(otp)){
+            setLoading(true);
+            await auth.confirmLogin(phone,otp)
+            .then(res => {
+                setLoading(false);
+                if(res){
+                  navigate('/');
+                }else{
+                  alert('You have entered the wrong OTP!')
+                }
+             })
+        }else{
+            alert('Please enter the correct OTP!')
+        }
     }
 
     return (
-        <div className="h-[100vh] bg-[aliceblue] flex justify-center items-center">
+        <div>
+            <LoadingScreen loading={loading}></LoadingScreen>
+            <div className="h-[100vh] bg-[aliceblue] flex justify-center items-center">
             <div className="bg-[white] h-[400px] w-[350px] shadow-lg rounded-lg flex flex-col items-center justify-center">
                 <div className="h-[20%]">
                     <span className="font-bold text-[30px]">Sign In</span>
@@ -52,6 +69,7 @@ export const Login = () => {
                 :''}
                 <button disabled={otpDiv} className="bg-[#ff3434] w-[30%] text-white rounded-md h-[40px]" onClick={() => handleLogin(phone)}>LOGIN</button>
             </div>
+        </div>
         </div>
     )
 }
