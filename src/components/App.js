@@ -8,8 +8,7 @@ const App = () => {
     return(
         <AuthProvider>
             <Routes>
-            <Route path='/' element={<Home />} />
-                {/* <Route path='/' element={<RequireAuth></RequireAuth>} /> */}
+                <Route path='/' element={<RequireAuth><Home /></RequireAuth>} />
                 <Route path='/login' element={<Login></Login>} />
             </Routes>
         </AuthProvider>

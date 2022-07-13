@@ -43,7 +43,7 @@ export const AuthProvider = ({ children }) => {
       .then(async (response) => {
               var data = await response.json();
               if(data.message === "Login Confirmed"){
-                setUser(phone_num)
+                setUser(phone_num);
                 resolve(true);
               }else{
                 resolve(false);

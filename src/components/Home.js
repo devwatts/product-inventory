@@ -17,7 +17,7 @@ export const Home = () => {
     return(
         <div className="bg-[aliceblue] h-[100vh]">
             <div className="flex flex-wrap m-[auto] w-[80%]">
-                {Object.keys(products).length !== 0?products.data.map((data)=><Card content={data}></Card>):''}
+                {Object.keys(products).length !== 0?products.data.map((data,index)=><Card key={index} content={data}></Card>):''}
             </div>
         </div>
     )
