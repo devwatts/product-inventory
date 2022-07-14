@@ -1,6 +1,5 @@
 import { useState, createContext, useContext } from 'react'
-const API =  'https://wattsinventory.herokuapp.com'; 
-//const API =  'http://localhost:3000';
+const API = process.env.REACT_APP_PRODUCTION_SERVER || 'http://localhost:3000';
 const AuthContext = createContext()
 
 export const AuthProvider = ({ children }) => {

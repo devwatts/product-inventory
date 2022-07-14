@@ -5,8 +5,6 @@ import { useAuth } from "../utils/auth";
 import { Modal } from "./Modal";
 import LoadingScreen from "./LoadingScreen";
 
-console.log(process.env)
-
 export const Home = () => {
     const [products, setProducts] = useState({});
     const [modalOpen, setmodalOpen] = useState(false);
