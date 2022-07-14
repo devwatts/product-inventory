@@ -1,5 +1,5 @@
 export const Card = (props) => {
-    console.log(props)
+    //console.log(props)
     return (
         <div className="w-[180px] h-[240px] bg-[white] p-[12px] rounded-lg shadow-lg flex flex-col m-[30px]">
             <div className="flex justify-end cursor-pointer">

@@ -9,7 +9,6 @@ export const Login = () => {
     const [otpDiv, setOtpDiv] = useState(false);
     const [otp, setOtp] = useState('');
     const [loading, setLoading] = useState(false);
-    const [resendDiv, setResendDiv] = useState(false);
     const auth = useAuth();
     const navigate = useNavigate();
 
@@ -19,9 +18,6 @@ export const Login = () => {
             await auth.login(phone)
             .then(res => {
                 setLoading(false);
-                setTimeout(function(){
-                    setResendDiv(true)
-                },5000)
                 if(res){
                  setOtpDiv(true);
                  }else{
@@ -69,7 +65,7 @@ export const Login = () => {
                         <input type={'text'} minLength={6} maxLength={6} className='ml-[6px] outline-none text-[14px] w-[30%]' onChange={e => setOtp(e.target.value)} />
                         <button className="bg-[#ff3434] pl-[10px] pr-[10px] w-[fit-content] text-[12px] text-white rounded-md h-[20px]" onClick={() => handleOtp(phone,otp)}>Confirm OTP</button>
                     </div>
-                    {resendDiv?<a className="text-[#7171f6] text-[13px]" onClick={() => handleLogin(phone)} href="">Resend OTP</a>:''}
+                    {}
                 </div>
                 :''}
                 <button disabled={otpDiv} className="bg-[#ff3434] w-[30%] text-white rounded-md h-[40px]" onClick={() => handleLogin(phone)}>LOGIN</button>

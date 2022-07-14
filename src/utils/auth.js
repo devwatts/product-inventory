@@ -1,10 +1,10 @@
 import { useState, createContext, useContext } from 'react'
 const API =  'https://wattsinventory.herokuapp.com'; 
 //const API =  'http://localhost:3000';
-const AuthContext = createContext(null)
+const AuthContext = createContext()
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState({});
 
   const login = phone_num => {
     return new Promise(function(resolve,reject){
@@ -44,7 +44,9 @@ export const AuthProvider = ({ children }) => {
       .then(async (response) => {
               var data = await response.json();
               if(data.message === "Login Confirmed"){
-                setUser(phone_num);
+                setUser(data.loggedUser);
+                localStorage.clear();
+                localStorage.setItem('user',JSON.stringify(data.loggedUser));
                 resolve(true);
               }else{
                 resolve(false);
@@ -54,13 +56,47 @@ export const AuthProvider = ({ children }) => {
     })
   }
 
+  const verifyToken = () => {
+    return new Promise(function (resolve, reject) {
+      var loggedUser = JSON.parse(localStorage.getItem('user'))
+      if (loggedUser !== null && (loggedUser.user !== undefined && loggedUser.user !== null) && (loggedUser.token !== undefined && loggedUser.token !== null)) {
+        var data = {
+          'phone_num':loggedUser.user,
+          'token': loggedUser.token
+        }
+        //console.log(data)
+        fetch(`${API}/login/verify`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+          })
+          .then(async (response) => {
+            var data = await response.json();
+            //console.log(data);
+            if(data.status === true){
+              setUser({
+                user:loggedUser.user,
+                token:loggedUser.token
+              });
+              resolve(true);
+            }else{
+              resolve(false);
+            }
+          })
+          .catch((err) => console.log(err));
+      }
+    })
+  }
+
   const logout = () => {
-    setUser(null);
+    setUser({});
     localStorage.clear();
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, confirmLogin }}>
+    <AuthContext.Provider value={{ user, login, logout, confirmLogin,verifyToken }}>
       {children}
     </AuthContext.Provider>
   )

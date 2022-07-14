@@ -3,8 +3,28 @@ import { useAuth } from "./auth"
 
 export const RequireAuth = ({children}) => {
     const auth = useAuth();
-    if(!auth.user){
-        return <Navigate to='/login' />
+    const loggedUser = JSON.parse(localStorage.getItem('user'));
+
+    const tokenVerification = async() =>{
+        await auth.verifyToken()
+        .then(response => {
+            if(response){
+                return children;
+            }else{
+                localStorage.clear();
+                return <Navigate to='/login' />
+            }
+        })
     }
-    return children;
+
+    if(!auth.user || loggedUser === null || loggedUser.user === undefined || loggedUser.token === undefined){
+        return <Navigate to='/login' />
+    }else{
+        if(tokenVerification()){
+            return children;
+        }else{
+            return <Navigate to='/login' />
+        }
+    }
+    
 }

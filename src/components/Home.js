@@ -1,10 +1,10 @@
 import { Card } from "./ProductCard"
 import { useState,useEffect } from "react";
 import { getAllProducts } from "../actions/products";
+import { useAuth } from "../utils/auth";
 
 export const Home = () => {
     const [products, setProducts] = useState({});
-
     useEffect(() => {
         async function loadProducts(){
             setProducts(await getAllProducts());
@@ -12,7 +12,7 @@ export const Home = () => {
         loadProducts();
     },[]);
 
-    console.log(products)
+    //console.log(products)
     
     return(
         <div className="bg-[aliceblue] h-[100vh]">
