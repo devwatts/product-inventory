@@ -1,5 +1,5 @@
 import fetch from "isomorphic-fetch";
-const API = 'https://wattsinventory.herokuapp.com/login'
+const API = 'https://wattsinventory.herokuapp.com'
 //const API = process.env.PRODUCTION_SERVER || 'http://localhost:3000';
 
 export const getAllProducts = (token) => {
