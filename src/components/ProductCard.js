@@ -1,8 +1,27 @@
+import { useAuth } from "../utils/auth";
+import { deleteProduct } from "../actions/products";
+
 export const Card = (props) => {
+    const auth = useAuth();
+
     //console.log(props)
+
+    const deleteProductHandle = async(id) => {
+        props.setIsLoading(true);
+        await deleteProduct(auth.user.token,id)
+        .then(response => {
+            if(response){
+                window.location.reload();
+            }else{
+                alert('Couldnt delete the Product')
+                props.setIsLoading(false);
+            }
+        })
+    }
+
     return (
         <div className="w-[180px] h-[240px] bg-[white] p-[12px] rounded-lg shadow-lg flex flex-col m-[30px]">
-            <div className="flex justify-end cursor-pointer">
+            <div onClick={() => deleteProductHandle(props.content._id)} className="flex justify-end cursor-pointer">
                 <img alt="delete-icon" className="h-[20px] w-[20px]" src="./delete.png" />
             </div>
             <div className="place-self-center">
