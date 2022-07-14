@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../utils/auth";
 import { addNewProduct } from "../actions/products";
 import LoadingScreen from "./LoadingScreen";
@@ -10,6 +10,14 @@ export const Modal = (props) => {
     const [imageURL, setImageURL] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const auth = useAuth();
+
+    useEffect(() => {
+        if(props.isOpen){
+            document.body.style.overflow = "hidden";
+        }else{
+            document.body.style.overflow = "auto";
+        }
+    },[props.isOpen])
 
     const handleProductName = (value) =>{
         setProductName(value);
@@ -33,6 +41,7 @@ export const Modal = (props) => {
 
     const sendProductData = async() =>{
         setIsLoading(true);
+        
         var data = {
             title:productName,
             sell_price:sellingPrice,
@@ -53,7 +62,7 @@ export const Modal = (props) => {
     }
 
     return (
-        <div className={props.isOpen?'bg-[#111111]/[0.40] h-[100vh] w-[100%] absolute top-0 z-[1000] flex items-center justify-center':'hidden'}>
+        <div className={props.isOpen?'bg-[#111111]/[0.40] fixed h-[100%] min-h-[100vh] w-[100%] top-0 z-[1000] flex items-center justify-center':'hidden'}>
             <LoadingScreen loading={isLoading}></LoadingScreen>
             <div className="bg-[white] h-[450px] w-[400px] rounded-lg p-[20px] flex flex-col">
                     <button className="self-end" onClick={()=>props.changeState(false)}>

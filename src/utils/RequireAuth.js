@@ -15,19 +15,19 @@ export const RequireAuth = ({children}) => {
                 return true;
             }else{
                 localStorage.clear();
-                return <Navigate to='/login' />
+                return <Navigate to='/' />
             }
         })
     }
 
     if(!auth.user || loggedUser === null || loggedUser.user === undefined || loggedUser.token === undefined){
-        return <Navigate to='/login' />
+        //return <Navigate to='/' />
     }else{
         if(!userVerification){
             if(tokenVerification()){
                 setUserVerification(true);
             }else{
-                return <Navigate to='/login' />
+                //return <Navigate to='/login' />
             }
         }else if(userVerification){
             return children;
