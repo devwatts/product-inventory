@@ -10,13 +10,14 @@ import { RequireAuth } from "../utils/RequireAuth";
 export const Home = () => {
     const [products, setProducts] = useState({});
     const [modalOpen, setmodalOpen] = useState(false);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
     const auth = useAuth();
     
     useEffect(() => {
         async function loadProducts(){
             setProducts(await getAllProducts());
+            setLoading(false);
         }
         loadProducts();
     },[]);
