@@ -37,7 +37,7 @@ export const Home = () => {
                 </div>
             </RequireAuth>
                 {
-                Object.keys(auth.user).length !== 0?'': 
+                Object.keys(auth.user).length !== 0 && auth.user.user !== undefined?'': 
                 <div className="flex justify-end items-center h-[70px] p-[20px]">
                     <button className="bg-[#ff3434] pl-[10px] pr-[10px] m-[10px] text-white rounded-md h-[30px]" onClick={() => handleLogin()}>Login</button>
                 </div>
