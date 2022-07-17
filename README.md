@@ -3,6 +3,8 @@
 
 The product inventory front end code in reactjs
 
+Whatsapp OTP verification done using twilio
+
 ## Environment Variables
 
 To run this project, you will need to add the following environment variables to your .env file
