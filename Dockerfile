@@ -1,4 +1,4 @@
-FROM gcr.io/distroless/nodejs16-debian11
+FROM node:alpine
 ENV REACT_APP_PRODUCTION_SERVER https://wattsinventory.herokuapp.com
 WORKDIR /app
 COPY package.json ./
