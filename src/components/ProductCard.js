@@ -34,7 +34,7 @@ export const Card = (props) => {
             <div className="w-[90%] mt-[3px] flex justify-between items-center">
                 <span className="text-[14px] font-bold">₹{props.content.sell_price}</span>
                 <span className="text-[14px] text-[gray] line-through">₹{props.content.act_price}</span>
-                <span className="text-[13px] text-[green]">{parseInt(parseInt(props.act_price)/parseInt(props.sell_price))}%OFF</span>
+                <span className="text-[13px] text-[green]">{parseInt(parseInt(props.content.act_price)/parseInt(props.content.sell_price))}%OFF</span>
             </div>
         </div>
     )
